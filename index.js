@@ -39,6 +39,37 @@ const result=await response.json();
 
 displayResults(result);
 }
+
+
+
+//below the code represent the how we can fetch the data api using xhr and  async and await.
+
+
+
+ function helperMethod(method,url){
+    const promise=new Promise((resolve,reject)=>{
+        const xhr=new XMLHttpRequest();
+        xhr.open(method,url);
+        xhr.responseType='json';
+        xhr.send();
+
+        xhr.onload=()=>{
+
+            if(xhr.status===200){
+                resolve(xhr.response);
+            }else{
+                reject(xhr.response);
+            }
+        }
+
+    })
+    return promise;
+ }
+
+ async function fetchUsingXHRAndAsynAwaitMehod(){
+     const response=await helperMethod('GET',"https://jsonplaceholder.typicode.com/posts");
+     displayResults(response);
+}
 function displayResults(posts) {
   postListContainer.innerHTML = posts
     .map(
@@ -58,4 +89,6 @@ function displayResults(posts) {
 
 // fetchUsingFetchMethod();
 
-fetchUsingAsyncAwait();
+// fetchUsingAsyncAwait();
+
+fetchUsingXHRAndAsynAwaitMehod();
